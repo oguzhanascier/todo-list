@@ -5,38 +5,47 @@
       class="addItem"
       v-model="task"
       @keydown.enter="todoText"
+      placeholder="Write a task..."
+      ref="inputFocus"
     />
     <div class="item" v-for="(item, index) in toDoList" :key="index">
-      <div class="checkText" @click="item.isCompleted== !item.isCompleted">
-        <input :checked="item.isCompleted" type="checkbox" />
+      <div class="checkText">
+        <!-- <input  @click="completed(item)" type="checkbox" /> -->
+        <i class="fa-regular fa-circle" @click="completed(index, item)" :class="{ circleBg: item.isCompleted }"></i>
         <ul>
-          <li :id="item.id" :class="{ compluted: item.isCompleted }" >
-            {{ item.text }} {{ item.id }} {{ item.isCompleted }}
+          <li :id="item.id" :class="{ compluted: item.isCompleted }">
+            {{ item.text }} 
           </li>
         </ul>
       </div>
-      <i class="fa-solid fa-trash-can" @click="deleteItem(index)"></i>
+      <i class="fa-solid fa-trash-can" @click="deleteItem(index, task)"></i>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+
   data() {
     return {
       task: "",
       toDoList: [
         { id: 3, text: "Keşkül", isCompleted: true },
         { id: 4, text: "Erik", isCompleted: false },
+        { id: 5, text: "Zargana", isCompleted: true },
+        { id: 6, text: "Şişko Ronaldo", isCompleted: false },
       ],
     };
   },
+
   methods: {
     todoText() {
+      // random ID
       let randomNumber =
         Math.floor(Math.random() * 1000) +
         "efoK" +
         Math.floor(Math.random() * 1000);
+      // new item
       this.toDoList.push({
         id: randomNumber,
         text: this.task,
@@ -44,14 +53,22 @@ export default {
       });
       this.task = "";
     },
-    deleteItem(index, task) {
+
+    /**********/
+    deleteItem(index,task) {
+   // Removing the item from the array.
       this.toDoList.splice(index, 1);
+     // Focusing the input element.
+      this.$refs.inputFocus.focus()
     },
-    checkedBox(index) {
-      this.isCompleted == true;
+    
+    // completed
+    completed(item) {
+      item.isCompleted = !item.isCompleted;
     },
   },
   computed: {
+    // line-through
     className() {
       let classes;
       if (this.toDoList.isCompleted == true) {
@@ -65,13 +82,14 @@ export default {
 </script>
 
 <style>
+
 .toDoContainer {
   padding: 30px;
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 340px;
-  height: 65%;
+  min-height: 440px   ;
   background: #f4f4f4;
   box-shadow: 2px 12px 29px -8px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 2px 12px 29px -8px rgba(0, 0, 0, 0.75);
@@ -126,6 +144,7 @@ li {
 .addItem {
   width: 340px;
   height: 47px;
+  padding: 0px 15px;
   border: none;
   border-radius: 15px;
   margin-top: 20px;
@@ -137,5 +156,12 @@ li {
 }
 .item .compluted {
   color: rgba(86, 86, 86, 0.306);
+}
+.circleBg{
+  height: 15px;
+  width: 15px;
+  background-color: #333;
+  border: none;
+  border-radius: 50%;
 }
 </style>
