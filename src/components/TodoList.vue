@@ -61,7 +61,7 @@ export default {
      // Focusing the input element.
       this.$refs.inputFocus.focus()
     },
-    
+
     // completed
     completed(item) {
       item.isCompleted = !item.isCompleted;
@@ -91,9 +91,7 @@ export default {
   width: 340px;
   min-height: 440px   ;
   background: #f4f4f4;
-  box-shadow: 2px 12px 29px -8px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 2px 12px 29px -8px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 2px 12px 29px -8px rgba(0, 0, 0, 0.75);
+  filter: drop-shadow(3mm 4.5mm 5mm rgba(0, 0, 0, 0.377));
 }
 
 .toDoList {
